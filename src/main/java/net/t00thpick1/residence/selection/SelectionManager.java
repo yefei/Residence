@@ -18,7 +18,7 @@ public class SelectionManager {
     protected Map<String, Location> playerLoc1;
     protected Map<String, Location> playerLoc2;
 
-    public static final int MAX_HEIGHT = 255, MIN_HEIGHT = 0;
+//    public static final int MAX_HEIGHT = 255, MIN_HEIGHT = 0;
 
     public enum Direction {
         PLUSY, PLUSX, PLUSZ, MINUSY, MINUSX, MINUSZ
@@ -81,9 +81,9 @@ public class SelectionManager {
             int y1 = playerLoc1.get(player.getName()).getBlockY();
             int y2 = playerLoc2.get(player.getName()).getBlockY();
             if (y1 > y2) {
-                playerLoc1.get(player.getName()).setY(MAX_HEIGHT);
+                playerLoc1.get(player.getName()).setY(YAMLGroupManager.getMaxY(player));
             } else {
-                playerLoc2.get(player.getName()).setY(MAX_HEIGHT);
+                playerLoc2.get(player.getName()).setY(YAMLGroupManager.getMaxY(player));
             }
             player.sendMessage(LocaleLoader.getString("Selection.SelectionSky"));
         } else {
@@ -96,9 +96,9 @@ public class SelectionManager {
             int y1 = playerLoc1.get(player.getName()).getBlockY();
             int y2 = playerLoc2.get(player.getName()).getBlockY();
             if (y1 < y2) {
-                playerLoc1.get(player.getName()).setY(MIN_HEIGHT);
+                playerLoc1.get(player.getName()).setY(YAMLGroupManager.getMinY(player));
             } else {
-                playerLoc2.get(player.getName()).setY(MIN_HEIGHT);
+                playerLoc2.get(player.getName()).setY(YAMLGroupManager.getMaxY(player));
             }
             player.sendMessage(LocaleLoader.getString("Selection.SelectionBedrock"));
         } else {

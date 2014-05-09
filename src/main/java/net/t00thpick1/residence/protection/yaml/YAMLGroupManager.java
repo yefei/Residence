@@ -38,43 +38,43 @@ public class YAMLGroupManager {
     }
 
     public static double getCostPerBlock(Player player) {
-        return getGroup(player).getDouble("CostPerBlock");
+        return getGroup(player).getDouble("CostPerBlock", 0);
     }
 
     public static int getMaxHeight(Player player) {
-        return getGroup(player).getInt("MaxHeight");
+        return getGroup(player).getInt("MaxHeight", 255);
     }
 
     public static int getMaxY(Player player) {
-        return getGroup(player).getInt("MaxY");
+        return getGroup(player).getInt("MaxY", 255);
     }
 
     public static int getMinHeight(Player player) {
-        return getGroup(player).getInt("MinHeight");
+        return getGroup(player).getInt("MinHeight", 0);
     }
 
     public static int getMinY(Player player) {
-        return getGroup(player).getInt("MinY");
+        return getGroup(player).getInt("MinY", 0);
     }
 
     public static int getMaxWidth(Player player) {
-        return getGroup(player).getInt("MaxWidth");
+        return getGroup(player).getInt("MaxWidth", 200);
     }
 
     public static int getMinWidth(Player player) {
-        return getGroup(player).getInt("MinWidth");
+        return getGroup(player).getInt("MinWidth", 0);
     }
 
     public static int getMaxLength(Player player) {
-        return getGroup(player).getInt("MaxLength");
+        return getGroup(player).getInt("MaxLength", 200);
     }
 
     public static int getMinLength(Player player) {
-        return getGroup(player).getInt("MinLength");
+        return getGroup(player).getInt("MinLength", 0);
     }
 
     public static int getMaxResidences(String player) {
-        return getGroup(player).getInt("MaxResidences");
+        return getGroup(player).getInt("MaxResidences", 1);
     }
 
     public static Map<Flag, Boolean> getDefaultAreaFlags(String player) {
@@ -102,10 +102,10 @@ public class YAMLGroupManager {
     }
 
     public static String getDefaultEnterMessage(String owner) {
-        return getGroup(owner).getString("DefaultEnterMessage");
+        return getGroup(owner).getString("DefaultEnterMessage", "You have entered %area%");
     }
 
     public static String getDefaultLeaveMessage(String owner) {
-        return getGroup(owner).getString("DefaultLeaveMessage");
+        return getGroup(owner).getString("DefaultLeaveMessage", "You have left %area%");
     }
 }

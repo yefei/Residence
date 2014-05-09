@@ -18,8 +18,6 @@ public class SelectionManager {
     protected Map<String, Location> playerLoc1;
     protected Map<String, Location> playerLoc2;
 
-//    public static final int MAX_HEIGHT = 255, MIN_HEIGHT = 0;
-
     public enum Direction {
         PLUSY, PLUSX, PLUSZ, MINUSY, MINUSX, MINUSZ
     }
@@ -115,10 +113,10 @@ public class SelectionManager {
         Chunk chunk = player.getWorld().getChunkAt(player.getLocation());
         int xcoord = chunk.getX() * 16;
         int zcoord = chunk.getZ() * 16;
-        int ycoord = MIN_HEIGHT;
+        int ycoord = YAMLGroupManager.getMinY(player);
         int xmax = xcoord + 15;
         int zmax = zcoord + 15;
-        int ymax = MAX_HEIGHT;
+        int ymax = YAMLGroupManager.getMaxY(player);
         this.playerLoc1.put(player.getName(), new Location(player.getWorld(), xcoord, ycoord, zcoord));
         this.playerLoc2.put(player.getName(), new Location(player.getWorld(), xmax, ymax, zmax));
         player.sendMessage(LocaleLoader.getString("Selection.SelectionSuccess"));
@@ -160,7 +158,7 @@ public class SelectionManager {
             lowLoc = loc1;
         }
         if (d == Direction.PLUSY) {
-            if (highLoc.getBlockY() + amount > MAX_HEIGHT) {
+            if (highLoc.getBlockY() + amount > YAMLGroupManager.getMaxHeight(player)) {
                 player.sendMessage(LocaleLoader.getString("Selection.TooHigh"));
                 return;
             }
@@ -172,7 +170,7 @@ public class SelectionManager {
                 player.sendMessage(LocaleLoader.getString("Selection.Expanding.Y.Positive"));
         }
         if (d == Direction.MINUSY) {
-            if (lowLoc.getBlockY() - amount < MIN_HEIGHT) {
+            if (lowLoc.getBlockY() - amount < YAMLGroupManager.getMinHeight(player)) {
                 player.sendMessage(LocaleLoader.getString("Selection.TooLow"));
                 return;
             }

@@ -1197,6 +1197,10 @@ public class ResidenceCommandExecutor implements CommandExecutor {
                 player.sendMessage(LocaleLoader.getString("Commands.Generic.InvalidResidence", args[2]));
                 return true;
             }
+            if (!res.isForSale()) {
+                player.sendMessage(LocaleLoader.getString("Commands.Market.Unsell.NotForSale"));
+                return true;
+            }
             int cost = res.getCost();
             if (!res.buy(player.getName())) {
                 player.sendMessage(LocaleLoader.getString("Commands.Market.Buy.TooPoor", cost));
@@ -1223,6 +1227,7 @@ public class ResidenceCommandExecutor implements CommandExecutor {
                 return true;
             }
             res.removeFromMarket();
+            player.sendMessage(LocaleLoader.getString("Commands.Market.Unsell.Success", args[2]));
             return true;
         }
         if (command.equalsIgnoreCase("sell")) {

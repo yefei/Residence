@@ -267,6 +267,10 @@ public abstract class MemoryResidenceArea extends MemoryCuboidArea implements Re
         MemoryEconomyManager econ = (MemoryEconomyManager) ResidenceAPI.getEconomyManager();
         econ.removeFromRent(this);
         econ.removeFromSale(this);
+        this.isRentable = false;
+        this.isBuyable = false;
+        this.rentPeriod = 0;
+        this.cost = 0;
     }
 
     @Override
@@ -292,6 +296,9 @@ public abstract class MemoryResidenceArea extends MemoryCuboidArea implements Re
 
     @Override
     public boolean buy(String buyer) {
+        if (!isForSale()) {
+            throw new IllegalStateException("ResidenceArea not for sale");
+        }
         Economy econ = Residence.getInstance().getEconomy();
         if (!econ.has(buyer, cost)) {
             return false;
@@ -394,6 +401,7 @@ public abstract class MemoryResidenceArea extends MemoryCuboidArea implements Re
         teleportLocation = location;
         return true;
     }
+    
 
     @Override
     public void applyDefaultFlags() {

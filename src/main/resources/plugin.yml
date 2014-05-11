@@ -2,7 +2,6 @@ name: Residence
 main: net.t00thpick1.residence.Residence
 version: ${version}
 description: Cuboid Residence Plugin
-author: t00thpick1
 authors: [t00thpick1,bekvon]
 contributors: [nate302,lemon42,smbarbour,inorixu,Shayana_fr]
 softdepend: [Vault,WorldEdit]
@@ -60,7 +59,6 @@ permissions:
       residence.commands.current: true
       residence.commands.set: true
       residence.commands.pset: true
-      residence.commands.gset: true
       residence.commands.rset: true
       residence.commands.rentlink: true
       residence.commands.rentlinks: true
@@ -114,9 +112,6 @@ permissions:
     default: op
   residence.commands.pset:
     description: Allows you to set player flags
-    default: op
-  residence.commands.gset:
-    description: Allows you to set group flags
     default: op
   residence.commands.rset:
     description: Allows you to set rent flags

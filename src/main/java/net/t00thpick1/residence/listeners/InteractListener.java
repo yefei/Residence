@@ -158,9 +158,6 @@ public class InteractListener implements Listener {
         }
         Material mat = block.getType();
         if (mat == Material.SOIL || mat == Material.SOUL_SAND) {
-            if (Utilities.isAdminMode(player)) {
-                return;
-            }
             if (!ResidenceAPI.getPermissionsAreaByLocation(block.getLocation()).allowAction(player.getName(), FlagManager.TRAMPLE)) {
                 event.setCancelled(true);
                 return;

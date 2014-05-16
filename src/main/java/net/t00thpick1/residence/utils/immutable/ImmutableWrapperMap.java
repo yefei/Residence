@@ -77,4 +77,15 @@ public class ImmutableWrapperMap<K, V> implements Map<K, V> {
         return new ImmutableWrapperSet<Entry<K, V>>(map.entrySet());
     }
 
+    /**
+     * We use this to avoid unnecessary processing for creation of a true immutable set, all we need is
+     * enough deterrent to keep people from unknowingly misusing our returned values.
+     *
+     * @author t00thpick1
+     */
+    private class ImmutableWrapperSet<Z> extends ImmutableWrapperCollection<Z> implements Set<Z> {
+        public ImmutableWrapperSet(Set<Z> set) {
+            super(set);
+        }
+    }
 }

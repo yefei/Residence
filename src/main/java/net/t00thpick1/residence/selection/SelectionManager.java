@@ -96,7 +96,7 @@ public class SelectionManager {
             if (y1 < y2) {
                 playerLoc1.get(player.getName()).setY(YAMLGroupManager.getMinY(player));
             } else {
-                playerLoc2.get(player.getName()).setY(YAMLGroupManager.getMaxY(player));
+                playerLoc2.get(player.getName()).setY(YAMLGroupManager.getMinY(player));
             }
             player.sendMessage(LocaleLoader.getString("Selection.SelectionBedrock"));
         } else {

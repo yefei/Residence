@@ -273,7 +273,6 @@ public class ResidenceCommandExecutor implements CommandExecutor {
                 return true;
             }
             printRentLinks(player, res);
-
             return true;
         }
         if (cmd.equalsIgnoreCase("rename")) {
@@ -775,6 +774,11 @@ public class ResidenceCommandExecutor implements CommandExecutor {
                 player.sendMessage(LocaleLoader.getString("Commands.Create.Charged", cost));
                 Residence.getInstance().getEconomy().withdrawPlayer(player.getName(), cost);
             }
+        }
+        ResidenceArea collide = rmanager.getCollision(newArea);
+        if (collide != null) {
+            player.sendMessage(LocaleLoader.getString("Commands.Create.Collide", collide.getName()));
+            return true;
         }
         if (rmanager.createResidence(args[1], player.getName(), newArea) != null) {
             player.sendMessage(LocaleLoader.getString("Commands.Create.Success", args[1]));

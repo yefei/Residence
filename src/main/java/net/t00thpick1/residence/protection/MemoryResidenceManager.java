@@ -11,6 +11,7 @@ import org.bukkit.Location;
 import org.bukkit.World;
 
 import net.t00thpick1.residence.api.ResidenceManager;
+import net.t00thpick1.residence.api.areas.CuboidArea;
 import net.t00thpick1.residence.api.areas.ResidenceArea;
 import net.t00thpick1.residence.utils.immutable.ImmutableWrapperCollection;
 
@@ -90,6 +91,24 @@ public abstract class MemoryResidenceManager implements ResidenceManager {
     @Override
     public Collection<ResidenceArea> getResidencesInWorld(World world) {
         return new ImmutableWrapperCollection<ResidenceArea>(residencesByWorld.get(world.getName()).values());
+    }
+
+    @Override
+    public ResidenceArea getCollision(CuboidArea area) {
+        List<ChunkRef> chunks = ((MemoryCuboidArea) area).getChunks();
+        Map<ChunkRef, List<String>> residences = residenceNamesByChunk.get(area.getWorld().getName());
+        for (ChunkRef chunk : chunks) {
+            List<String> posCollisions = residences.get(chunk);
+            if (posCollisions != null) {
+                for (String key : posCollisions) {
+                    ResidenceArea collision = getByName(key);
+                    if (collision.checkCollision(area)) {
+                        return collision;
+                    }
+                }
+            }
+        }
+        return null;
     }
 
     public void removeChunkList(ResidenceArea res) {

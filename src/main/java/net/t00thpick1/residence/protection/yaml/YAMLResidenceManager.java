@@ -94,7 +94,7 @@ public class YAMLResidenceManager extends MemoryResidenceManager {
         if (residencesByName.containsKey(name.toLowerCase())) {
             return null;
         }
-        if (!collisionFree(area)) {
+        if (getCollision(area) != null) {
             return null;
         }
         YAMLResidenceArea newRes = null;
@@ -112,23 +112,6 @@ public class YAMLResidenceManager extends MemoryResidenceManager {
         }
 
         return newRes;
-    }
-
-    private boolean collisionFree(CuboidArea area) {
-        List<ChunkRef> chunks = ((MemoryCuboidArea) area).getChunks();
-        Map<ChunkRef, List<String>> residences = residenceNamesByChunk.get(area.getWorld().getName());
-        for (ChunkRef chunk : chunks) {
-            List<String> posCollisions = residences.get(chunk);
-            if (posCollisions != null) {
-                for (String key : posCollisions) {
-                    ResidenceArea collision = getByName(key);
-                    if (collision.checkCollision(area)) {
-                        return false;
-                    }
-                }
-            }
-        }
-        return true;
     }
 
     public int getOwnedZoneCount(String player) {

@@ -37,6 +37,14 @@ public interface ResidenceManager {
     public ResidenceArea getByLocation(Location location, boolean recurseIntoSubzones);
 
     /**
+     * Gets a ResidenceArea that would prevent an area from becoming a ResidenceArea.
+     *
+     * @param area area
+     * @return a ResidenceArea that collides, or null if none
+     */
+    public ResidenceArea getCollision(CuboidArea area);
+
+    /**
      * Gets a ResidenceArea by it's fully qualified name.
      * <p>
      * This should be used for user input only, any data storage/recollection should use

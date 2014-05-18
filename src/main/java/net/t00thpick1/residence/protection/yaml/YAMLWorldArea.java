@@ -39,10 +39,7 @@ public class YAMLWorldArea implements WorldArea {
         if (flag.getParent() != null) {
             return allowAction(flag.getParent());
         }
-        if (flag == FlagManager.ADMIN) {
-            return false;
-        }
-        return true;
+        return flag.getDefault();
     }
 
     @Override
@@ -52,7 +49,7 @@ public class YAMLWorldArea implements WorldArea {
                 return perms.getBoolean(flag.getName());
             }
             if (flag.getParent() == null) {
-                return true;
+                return flag.getDefault();
             } else {
                 flag = flag.getParent();
             }

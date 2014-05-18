@@ -14,6 +14,7 @@ public final class Flag {
     private final FlagType type;
     private final Permission perm;
     private final String description;
+    private final boolean def;
 
     /**
      * Constructs a new Flag.
@@ -27,6 +28,22 @@ public final class Flag {
      * @param description the display description
      */
     public Flag(String flag, FlagType type, Flag parent, String description) {
+        this(flag, type, parent, description, true);
+    }
+
+    /**
+     * Constructs a new Flag.
+     * <p>
+     * This process includes creating its permission node and handling permission
+     * inheritance.
+     *
+     * @param flag the unique name of the flag, case insensitive
+     * @param type the type of the flag
+     * @param parent the parent flag
+     * @param description the display description
+     * @param def the default value of this flag if not set
+     */
+    public Flag(String flag, FlagType type, Flag parent, String description, boolean def) {
         this.name = flag.toLowerCase();
         this.type = type;
         this.parent = parent;
@@ -37,6 +54,7 @@ public final class Flag {
             this.perm.addParent("residence.flags.all", true);
         }
         this.description = description;
+        this.def = def;
     }
 
     /**
@@ -107,5 +125,14 @@ public final class Flag {
      */
     public final String getDescription() {
         return description;
+    }
+
+    /**
+     * Gets the default value for this flag if not set.
+     *
+     * @return the flag's default
+     */
+    public final boolean getDefault() {
+        return def;
     }
 }

@@ -1,18 +1,28 @@
 package net.t00thpick1.residence.utils.parser;
 
+import java.util.HashMap;
 import java.util.LinkedList;
-import net.t00thpick1.residence.utils.parser.Variable.VariableType;
+import java.util.Map;
 
 public abstract class EquationParser {
     public static Equation parse(String string) {
         LinkedList<Character> stack = new LinkedList<Character>();
         LinkedList<Equation> output = new LinkedList<Equation>();
+        StringBuilder tokenBuilder = new StringBuilder();
         for (char c : string.toCharArray()) {
             if (c == ' ') {
+                if (tokenBuilder.length() > 0) {
+                    handleToken(stack, output, tokenBuilder.toString());
+                    tokenBuilder = new StringBuilder();
+                }
                 continue;
             }
-            int prec = getPrecidence(c);
-            if (prec != -1) {
+            if (isOperation(c)) {
+                if (tokenBuilder.length() > 0) {
+                    handleToken(stack, output, tokenBuilder.toString());
+                    tokenBuilder = new StringBuilder();
+                }
+                int prec = getPrecidence(c);
                 if (stack.size() > 0) {
                     while (true) {
                         int precStack = getPrecidence(stack.peekLast());
@@ -36,6 +46,7 @@ public abstract class EquationParser {
                                     output.add(new PowerEquation(a, b));
                                     break;
                             }
+                            break;
                         } else {
                             break;
                         }
@@ -43,9 +54,22 @@ public abstract class EquationParser {
                 }
                 stack.add(c);
             } else if (c == '(') {
-                stack.add(c);
+                if (isTrig(tokenBuilder.toString())) {
+                    stack.add(tokenBuilder.charAt(0));
+                    tokenBuilder = new StringBuilder();
+                } else {
+                    if (tokenBuilder.length() > 0) {
+                        throw new IllegalStateException("Invalid token: " + tokenBuilder.toString());
+                    }
+                    stack.add(c);
+                }
             } else if (c == ')') {
-                while (stack.peekLast() != '(') {
+                if (tokenBuilder.length() > 0) {
+                    handleToken(stack, output, tokenBuilder.toString());
+                    tokenBuilder = new StringBuilder();
+                }
+                char last = stack.peekLast();
+                while (last != '(' && last != 'c' && last != 's' && last != 't') {
                     Equation b = output.pollLast();
                     Equation a = output.pollLast();
                     switch (stack.pollLast()) {
@@ -65,12 +89,26 @@ public abstract class EquationParser {
                             output.add(new PowerEquation(a, b));
                             break;
                     }
+                    last = stack.peekLast();
                 }
-                stack.pollLast();
-            } else if (isVariable(c)) {
-                output.add(new Variable(VariableType.valueOf(String.valueOf(c))));
+                char b = stack.pollLast();
+                if (b == '(') {
+                    continue;
+                } else {
+                    switch (b) {
+                        case 's':
+                            output.add(new SineEquation(output.pollLast()));
+                            break;
+                        case 'c':
+                            output.add(new CosineEquation(output.pollLast()));
+                            break;
+                        case 't':
+                            output.add(new TangentEquation(output.pollLast()));
+                            break;
+                    }
+                }
             } else {
-                output.add(new Constant(Double.valueOf(String.valueOf(c))));
+                tokenBuilder.append(c);
             }
         }
         while (stack.peekLast() != null) {
@@ -97,8 +135,38 @@ public abstract class EquationParser {
         return output.pollLast();
     }
 
-    private static boolean isVariable(char c) {
-        return c == 'X' || c == 'Y' || c == 'Z';
+    private static void handleToken(LinkedList<Character> stack, LinkedList<Equation> output, String token) {
+        if (isTrig(token)) {
+            switch (token.charAt(0)) {
+                case 's':
+                    output.add(new SineEquation(output.pollLast()));
+                    return;
+                case 'c':
+                    output.add(new CosineEquation(output.pollLast()));
+                    return;
+                case 't':
+                    output.add(new TangentEquation(output.pollLast()));
+                    return;
+            }
+        } else if (token.equalsIgnoreCase("pi")) {
+            output.add(new Constant(Math.PI));
+        } else if (isNumber(token)) {
+            output.add(new Constant(Double.valueOf(token)));
+        } else {
+            output.add(new Variable(token));
+        }
+    }
+
+    private static boolean isOperation(char c) {
+        return c == '*' || c == '/' || c == '+' || c == '-' || c == '^';
+    }
+
+    private static boolean isNumber(String token) {
+        return token.matches("^*[0-9\\.]+$");
+    }
+
+    private static boolean isTrig(String token) {
+        return token.equalsIgnoreCase("sin") || token.equalsIgnoreCase("cos") || token.equalsIgnoreCase("tan");
     }
 
     private static int getPrecidence(char c) {
@@ -111,6 +179,23 @@ public abstract class EquationParser {
         if (c == '^') {
             return 4;
         }
-        return -1;
+        return 0;
+    }
+
+    public static void main(String[] args) {
+        String test1 = "123 + 2 + (4/2)";
+        Equation test = parse(test1);
+        System.out.println(test.toString());
+        System.out.println(test.calculate(null));
+        String test2 = "1 + sin(2) + (4/2)";
+        test = parse(test2);
+        System.out.println(test.toString());
+        System.out.println(test.calculate(null));
+        Map<String, Double> vars = new HashMap<String, Double>();
+        vars.put("X", 12D);
+        String test3 = "1 + sin(X) + (4/2)";
+        test = parse(test3);
+        System.out.println(test.toString());
+        System.out.println(test.calculate(vars));
     }
 }

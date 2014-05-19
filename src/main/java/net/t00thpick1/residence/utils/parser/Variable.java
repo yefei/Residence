@@ -1,32 +1,20 @@
 package net.t00thpick1.residence.utils.parser;
 
-public class Variable extends Equation {
-    private final VariableType variableType;
+import java.util.Map;
 
-    public Variable(VariableType valueOf) {
-        this.variableType = valueOf;
+public class Variable extends Equation {
+    private final String token;
+
+    public Variable(String token) {
+        this.token = token;
     }
 
     @Override
-    public double calculate(int x, int y, int z) {
-        switch (variableType) {
-            case X:
-                return x;
-            case Y:
-                return y;
-            case Z:
-                return z;
-        }
-        return 0;
+    public double calculate(Map<String, Double> variables) {
+        return variables.get(token);
     }
 
     public String toString() {
-        return variableType.name();
-    }
-
-    public enum VariableType {
-        X,
-        Y,
-        Z;
+        return token;
     }
 }

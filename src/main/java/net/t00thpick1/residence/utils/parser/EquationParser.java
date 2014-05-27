@@ -207,7 +207,7 @@ public abstract class EquationParser {
         System.out.println(test.calculate(null));
         Map<String, Double> vars = new HashMap<String, Double>();
         vars.put("X", 12D);
-        String test3 = "1 + sin(X) + (4/2)";
+        String test3 = "1 + sin(X) + ln(4/2)";
         test = parse(test3);
         System.out.println(test.toString());
         System.out.println(test.calculate(vars));

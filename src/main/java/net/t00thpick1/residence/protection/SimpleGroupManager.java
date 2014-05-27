@@ -34,7 +34,7 @@ public class SimpleGroupManager {
         Collections.sort(groups, new Comparator<Group>() {
             @Override
             public int compare(Group o1, Group o2) {
-                return o1.getWeight().compare(o2.getWeight());
+                return Integer.compare(o1.getWeight(), o2.getWeight());
             }});
     }
 
@@ -42,9 +42,9 @@ public class SimpleGroupManager {
         if (player == null) {
             return defaul;
         }
-        for (Entry<String, Group> perm : groups.entrySet()) {
-            if (player.hasPermission(perm.getKey())) {
-                return perm.getValue();
+        for (Group group : groups) {
+            if (player.hasPermission(group.getPermission())) {
+                return group;
             }
         }
         return defaul;

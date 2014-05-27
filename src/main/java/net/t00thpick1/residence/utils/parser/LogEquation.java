@@ -14,4 +14,7 @@ public class LogEquation extends Equation {
         return Math.log10(inside.calculate(variables));
     }
 
+    public String toString() {
+        return "log(" + inside + ")";
+    }
 }

@@ -14,4 +14,7 @@ public class NaturalLogEquation extends Equation {
         return Math.log(inside.calculate(variables));
     }
 
+    public String toString() {
+        return "ln(" + inside + ")";
+    }
 }

@@ -1,5 +1,7 @@
 package net.t00thpick1.residence.api.areas;
 
+import java.util.Map;
+
 import org.bukkit.Location;
 import org.bukkit.World;
 
@@ -39,4 +41,6 @@ public interface CuboidArea {
     public abstract int getLowY();
 
     public abstract int getLowZ();
+
+    public abstract Map<String, Double> getVariables();
 }

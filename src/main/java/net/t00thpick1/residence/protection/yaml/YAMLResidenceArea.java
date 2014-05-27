@@ -140,8 +140,8 @@ public class YAMLResidenceArea extends MemoryResidenceArea {
         ConfigurationSection data = section.createSection("Data");
         this.owner = owner;
         this.creationDate = System.currentTimeMillis();
-        this.enterMessage = YAMLGroupManager.getDefaultEnterMessage(owner);
-        this.leaveMessage = YAMLGroupManager.getDefaultLeaveMessage(owner);
+        this.enterMessage = ResidenceAPI.getGroup(Residence.getInstance().getServer().getPlayerExact(getOwner())).getDefaultEnterMessage();
+        this.leaveMessage = ResidenceAPI.getGroup(Residence.getInstance().getServer().getPlayerExact(getOwner())).getDefaultLeaveMessage();
         data.createSection("Area");
         data.createSection("MarketData");
         this.isBuyable = false;

@@ -5,8 +5,6 @@ import net.t00thpick1.residence.Residence;
 import net.t00thpick1.residence.api.ResidenceAPI;
 import net.t00thpick1.residence.api.areas.CuboidArea;
 import net.t00thpick1.residence.locale.LocaleLoader;
-import net.t00thpick1.residence.protection.yaml.YAMLGroupManager;
-
 import org.bukkit.Chunk;
 import org.bukkit.Location;
 import org.bukkit.entity.Player;
@@ -56,7 +54,7 @@ public class SelectionManager {
             CuboidArea cuboidArea = ResidenceAPI.createCuboidArea(getPlayerLoc1(player), getPlayerLoc2(player));
             player.sendMessage(LocaleLoader.getString("Selection.Total.Size", cuboidArea.getSize()));
             if (ConfigManager.getInstance().isEconomy()) {
-                player.sendMessage(LocaleLoader.getString("Selection.Land.Cost", Residence.getInstance().getEconomy().format((double) cuboidArea.getSize() * YAMLGroupManager.getCostPerBlock(player))));
+                player.sendMessage(LocaleLoader.getString("Selection.Land.Cost", Residence.getInstance().getEconomy().format(ResidenceAPI.getGroup(player).getCostEquation().calculate(cuboidArea.getVariables()))));
             }
             player.sendMessage(LocaleLoader.getString("Selection.Size.X", cuboidArea.getXSize()));
             player.sendMessage(LocaleLoader.getString("Selection.Size.Y", cuboidArea.getYSize()));
@@ -79,9 +77,9 @@ public class SelectionManager {
             int y1 = playerLoc1.get(player.getName()).getBlockY();
             int y2 = playerLoc2.get(player.getName()).getBlockY();
             if (y1 > y2) {
-                playerLoc1.get(player.getName()).setY(YAMLGroupManager.getMaxY(player));
+                playerLoc1.get(player.getName()).setY(ResidenceAPI.getGroup(player).getMaxY());
             } else {
-                playerLoc2.get(player.getName()).setY(YAMLGroupManager.getMaxY(player));
+                playerLoc2.get(player.getName()).setY(ResidenceAPI.getGroup(player).getMaxY());
             }
             player.sendMessage(LocaleLoader.getString("Selection.SelectionSky"));
         } else {
@@ -94,9 +92,9 @@ public class SelectionManager {
             int y1 = playerLoc1.get(player.getName()).getBlockY();
             int y2 = playerLoc2.get(player.getName()).getBlockY();
             if (y1 < y2) {
-                playerLoc1.get(player.getName()).setY(YAMLGroupManager.getMinY(player));
+                playerLoc1.get(player.getName()).setY(ResidenceAPI.getGroup(player).getMinY());
             } else {
-                playerLoc2.get(player.getName()).setY(YAMLGroupManager.getMinY(player));
+                playerLoc2.get(player.getName()).setY(ResidenceAPI.getGroup(player).getMinY());
             }
             player.sendMessage(LocaleLoader.getString("Selection.SelectionBedrock"));
         } else {
@@ -113,10 +111,10 @@ public class SelectionManager {
         Chunk chunk = player.getWorld().getChunkAt(player.getLocation());
         int xcoord = chunk.getX() * 16;
         int zcoord = chunk.getZ() * 16;
-        int ycoord = YAMLGroupManager.getMinY(player);
+        int ycoord = ResidenceAPI.getGroup(player).getMinY();
         int xmax = xcoord + 15;
         int zmax = zcoord + 15;
-        int ymax = YAMLGroupManager.getMaxY(player);
+        int ymax = ResidenceAPI.getGroup(player).getMaxY();
         this.playerLoc1.put(player.getName(), new Location(player.getWorld(), xcoord, ycoord, zcoord));
         this.playerLoc2.put(player.getName(), new Location(player.getWorld(), xmax, ymax, zmax));
         player.sendMessage(LocaleLoader.getString("Selection.SelectionSuccess"));
@@ -158,7 +156,7 @@ public class SelectionManager {
             lowLoc = loc1;
         }
         if (d == Direction.PLUSY) {
-            if (highLoc.getBlockY() + amount > YAMLGroupManager.getMaxHeight(player)) {
+            if (highLoc.getBlockY() + amount > ResidenceAPI.getGroup(player).getMaxHeight()) {
                 player.sendMessage(LocaleLoader.getString("Selection.TooHigh"));
                 return;
             }
@@ -170,7 +168,7 @@ public class SelectionManager {
                 player.sendMessage(LocaleLoader.getString("Selection.Expanding.Y.Positive"));
         }
         if (d == Direction.MINUSY) {
-            if (lowLoc.getBlockY() - amount < YAMLGroupManager.getMinHeight(player)) {
+            if (lowLoc.getBlockY() - amount < ResidenceAPI.getGroup(player).getMinHeight()) {
                 player.sendMessage(LocaleLoader.getString("Selection.TooLow"));
                 return;
             }

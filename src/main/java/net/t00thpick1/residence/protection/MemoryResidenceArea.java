@@ -24,7 +24,6 @@ import net.t00thpick1.residence.api.events.ResidenceAreaOwnerChangedEvent;
 import net.t00thpick1.residence.api.flags.Flag;
 import net.t00thpick1.residence.api.flags.FlagManager;
 import net.t00thpick1.residence.locale.LocaleLoader;
-import net.t00thpick1.residence.protection.yaml.YAMLGroupManager;
 import net.t00thpick1.residence.utils.immutable.ImmutableWrapperCollection;
 import net.t00thpick1.residence.utils.immutable.ImmutableWrapperMap;
 
@@ -408,12 +407,12 @@ public abstract class MemoryResidenceArea extends MemoryCuboidArea implements Re
         areaFlags.clear();
         playerFlags.clear();
         rentFlags.clear();
-        for (Entry<Flag, Boolean> defaultFlag : YAMLGroupManager.getDefaultAreaFlags(getOwner()).entrySet()) {
+        for (Entry<Flag, Boolean> defaultFlag : ResidenceAPI.getGroup(Residence.getInstance().getServer().getPlayerExact(getOwner())).getDefaultAreaFlags().entrySet()) {
             areaFlags.put(defaultFlag.getKey(), defaultFlag.getValue());
         }
         if (owner != null) {
             Map<Flag, Boolean> flags = new HashMap<Flag, Boolean>();
-            for (Entry<Flag, Boolean> defaultFlag : YAMLGroupManager.getDefaultOwnerFlags(getOwner()).entrySet()) {
+            for (Entry<Flag, Boolean> defaultFlag : ResidenceAPI.getGroup(Residence.getInstance().getServer().getPlayerExact(getOwner())).getDefaultOwnerFlags().entrySet()) {
                 flags.put(defaultFlag.getKey(), defaultFlag.getValue());
             }
             playerFlags.put(getOwner(), flags);

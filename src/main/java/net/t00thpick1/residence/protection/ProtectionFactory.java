@@ -14,7 +14,6 @@ import net.t00thpick1.residence.api.ResidenceManager;
 import net.t00thpick1.residence.api.UsernameUUIDCache;
 import net.t00thpick1.residence.api.WorldManager;
 import net.t00thpick1.residence.api.areas.CuboidArea;
-import net.t00thpick1.residence.protection.yaml.YAMLGroupManager;
 import net.t00thpick1.residence.protection.yaml.YAMLResidenceManager;
 import net.t00thpick1.residence.protection.yaml.YAMLUsernameUUIDCache;
 import net.t00thpick1.residence.protection.yaml.YAMLWorldManager;
@@ -25,6 +24,7 @@ public class ProtectionFactory {
     private static CuboidAreaFactory cuboidAreaFactory;
     private static WorldManager worldManager;
     private static EconomyManager economyManager;
+    private static SimpleGroupManager groupManager;
 
     public static void init(Residence residence) throws Exception {
         switch (residence.getBackend()) {
@@ -47,7 +47,8 @@ public class ProtectionFactory {
                     internalConfig.save(groupsFile);
                 }
 
-                YAMLGroupManager.init(YamlConfiguration.loadConfiguration(groupsFile));
+                groupManager = new SimpleGroupManager(YamlConfiguration.loadConfiguration(groupsFile));
+
                 File worldFolder = new File(dataFolder, "WorldConfigurations");
                 if (!worldFolder.isDirectory()) {
                     worldFolder.mkdirs();
@@ -75,6 +76,10 @@ public class ProtectionFactory {
 
     public static UsernameUUIDCache getUsernameUUIDCache() {
         return usernameUUIDCache;
+    }
+
+    public static SimpleGroupManager getGroupManager() {
+        return groupManager;
     }
 
     public static void save() {

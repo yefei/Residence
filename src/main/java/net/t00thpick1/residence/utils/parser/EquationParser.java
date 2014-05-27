@@ -54,7 +54,7 @@ public abstract class EquationParser {
                 }
                 stack.add(c);
             } else if (c == '(') {
-                if (isTrig(tokenBuilder.toString())) {
+                if (isSpecial(tokenBuilder.toString())) {
                     stack.add(tokenBuilder.charAt(0));
                     tokenBuilder = new StringBuilder();
                 } else {
@@ -136,7 +136,7 @@ public abstract class EquationParser {
     }
 
     private static void handleToken(LinkedList<Character> stack, LinkedList<Equation> output, String token) {
-        if (isTrig(token)) {
+        if (isSpecial(token)) {
             switch (token.charAt(0)) {
                 case 's':
                     output.add(new SineEquation(output.pollLast()));
@@ -165,8 +165,8 @@ public abstract class EquationParser {
         return token.matches("^*[0-9\\.]+$");
     }
 
-    private static boolean isTrig(String token) {
-        return token.equalsIgnoreCase("sin") || token.equalsIgnoreCase("cos") || token.equalsIgnoreCase("tan");
+    private static boolean isSpecial(String token) {
+        return token.equalsIgnoreCase("sin") || token.equalsIgnoreCase("cos") || token.equalsIgnoreCase("tan") || token.equalsIgnoreCase("ln") || token.equalsIgnoreCase("log");
     }
 
     private static int getPrecidence(char c) {

@@ -2,6 +2,7 @@ package net.t00thpick1.residence.api;
 
 import org.bukkit.Location;
 import org.bukkit.World;
+import org.bukkit.entity.Player;
 
 import net.t00thpick1.residence.api.areas.CuboidArea;
 import net.t00thpick1.residence.api.areas.PermissionsArea;
@@ -34,5 +35,9 @@ public class ResidenceAPI {
 
     public static EconomyManager getEconomyManager() {
         return ProtectionFactory.getEconomyManager();
+    }
+
+    public static Group getGroup(Player player) {
+        return ProtectionFactory.getGroupManager().getGroup(player);
     }
 }

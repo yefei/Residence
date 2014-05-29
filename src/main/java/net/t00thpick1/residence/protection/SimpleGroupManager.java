@@ -2,13 +2,8 @@ package net.t00thpick1.residence.protection;
 
 import java.util.Collections;
 import java.util.Comparator;
-import java.util.HashMap;
-import java.util.LinkedHashMap;
 import java.util.LinkedList;
 import java.util.List;
-import java.util.Map;
-import java.util.Map.Entry;
-
 import net.t00thpick1.residence.api.Group;
 import net.t00thpick1.residence.protection.yaml.YAMLGroup;
 
@@ -25,7 +20,7 @@ public class SimpleGroupManager {
         groups = new LinkedList<Group>();
         for (String group : config.getKeys(false)) {
             Group g = new YAMLGroup(config.getConfigurationSection(group));
-            if (group.equalsIgnoreCase("Default")) {
+            if (group.equalsIgnoreCase("DefaultSettings")) {
                 defaul = g;
             } else {
                 groups.add(g);

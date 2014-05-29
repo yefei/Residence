@@ -18,4 +18,5 @@ DefaultSettings:
     MinY: 0
     MaxY: 255
     MaxResidences: 10
-    CostPerBlock: 0
+    CostEquation: (YSize * XSize * ZSize) * 0
+    Weight: 0

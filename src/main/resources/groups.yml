@@ -1,7 +1,6 @@
 DefaultSettings:
     DefaultEnterMessage: "You have entered %area%"
     DefaultLeaveMessage: "You have left %area%"
-    GroupFlags: {}
     OwnerFlags:
         admin: true
         build: true

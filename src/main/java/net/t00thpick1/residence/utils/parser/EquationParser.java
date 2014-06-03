@@ -118,6 +118,9 @@ public abstract class EquationParser {
                 tokenBuilder.append(c);
             }
         }
+        if (tokenBuilder.length() > 0) {
+            handleToken(stack, output, tokenBuilder.toString());
+        }
         while (stack.peekLast() != null) {
             Equation b = output.pollLast();
             Equation a = output.pollLast();

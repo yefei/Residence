@@ -31,7 +31,7 @@ public class YAMLGroup implements Group {
     
     public YAMLGroup(ConfigurationSection section) {
         permission = "residence.groups." + section.getName();
-        costEquation = EquationParser.parse(section.getString("CostEquation", "0"));
+        costEquation = EquationParser.parse(section.getString("CostEquation", "XSize * YSize * ZSize"));
         maxHeight = section.getInt("MaxHeight", 255);
         maxY = section.getInt("MaxY", 255);
         minY = section.getInt("MinY", 0);

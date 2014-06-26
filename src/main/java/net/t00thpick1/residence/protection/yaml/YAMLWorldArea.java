@@ -23,7 +23,6 @@ public class YAMLWorldArea implements WorldArea {
         this.world = world;
         if (!section.isConfigurationSection("Permissions")) {
             this.perms = section.createSection("Permissions");
-            setAreaFlag(FlagManager.HEALING, false);
         } else {
             this.perms = section.getConfigurationSection("Permissions");
         }

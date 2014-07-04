@@ -1519,7 +1519,7 @@ public class ResidenceCommandExecutor implements CommandExecutor {
                     return true;
                 }
             }
-            int page = 0;
+            int page = 1;
             if (args.length == 3) {
                 try {
                     page = Integer.parseInt(args[2]);
@@ -1530,6 +1530,9 @@ public class ResidenceCommandExecutor implements CommandExecutor {
                     player.sendMessage(LocaleLoader.getString("Commands.Generic.InvalidNumber", args[2]));
                     return true;
                 }
+            }
+            if (page < 1) {
+                page = 1;
             }
             ResidenceArea[] subzones = res.getSubzoneList().toArray(new ResidenceArea[0]);
             player.sendMessage(LocaleLoader.getString("Commands.Sublist.List", res.getName(), page));

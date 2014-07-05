@@ -39,10 +39,11 @@ public class InteractListener implements Listener {
         }
         if (player.getItemInHand().getType() == ConfigManager.getInstance().getSelectionToolType()) {
             select(player, block, event);
-            return;
         }
         if (player.getItemInHand().getType() == ConfigManager.getInstance().getInfoToolType()) {
             info(player, block, event);
+        }
+        if (event.isCancelled()) {
             return;
         }
         interact(player, block, event);

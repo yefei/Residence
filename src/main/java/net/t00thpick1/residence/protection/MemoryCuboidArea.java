@@ -123,15 +123,15 @@ public class MemoryCuboidArea implements CuboidArea {
     }
 
     public int getXSize() {
-        return (highX - lowX);
+        return (highX - lowX) + 1;
     }
 
     public int getYSize() {
-        return (highY - lowY);
+        return (highY - lowY) + 1;
     }
 
     public int getZSize() {
-        return (highZ - lowZ);
+        return (highZ - lowZ) + 1;
     }
 
     public Location getHighLocation() {

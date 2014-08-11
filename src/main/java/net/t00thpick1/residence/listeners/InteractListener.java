@@ -174,7 +174,6 @@ public class InteractListener implements Listener {
         }
         if (!ResidenceAPI.getPermissionsAreaByLocation(block.getLocation()).allowAction(player.getName(), FlagManager.PRESSUREPLATE)) {
             event.setCancelled(true);
-            player.sendMessage(LocaleLoader.getString("Flags.Messages.FlagDeny", LocaleLoader.getString("Flags.Messages.UseFlagDeny", FlagManager.PRESSUREPLATE.getName())));
         }
     }
 

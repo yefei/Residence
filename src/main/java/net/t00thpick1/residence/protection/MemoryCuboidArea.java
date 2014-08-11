@@ -147,7 +147,7 @@ public class MemoryCuboidArea implements CuboidArea {
     }
 
     public Location getCenter() {
-        return new Location(world, (highX + getLowX()) / 2, (highY + getLowY()) / 2, (highZ + lowZ) / 2);
+        return new Location(world, (highX + lowX) / 2, (highY + lowY) / 2, (highZ + lowZ) / 2);
     }
 
     public List<ChunkRef> getChunks() {

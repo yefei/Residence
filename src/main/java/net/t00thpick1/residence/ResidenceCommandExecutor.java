@@ -774,10 +774,10 @@ public class ResidenceCommandExecutor implements CommandExecutor {
             double cost = group.getCostEquation().calculate(newArea.getVariables());
             if (cost != 0) {
                 if (!Residence.getInstance().getEconomy().has(player.getName(), cost)) {
-                    player.sendMessage(LocaleLoader.getString("Commands.Create.NotEnoughMoneyz", cost));
+                    player.sendMessage(LocaleLoader.getString("Commands.Create.NotEnoughMoneyz", Residence.getInstance().getEconomy().format(cost)));
                     return true;
                 }
-                player.sendMessage(LocaleLoader.getString("Commands.Create.Charged", cost));
+                player.sendMessage(LocaleLoader.getString("Commands.Create.Charged", Residence.getInstance().getEconomy().format(cost)));
                 Residence.getInstance().getEconomy().withdrawPlayer(player.getName(), cost);
             }
         }

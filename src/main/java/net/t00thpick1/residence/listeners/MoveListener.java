@@ -37,12 +37,12 @@ public class MoveListener implements Listener {
             return;
         }
         if (!res.allowAction(player.getName(), FlagManager.MOVE)) {
-            Location lastLoc = StateAssurance.getLastOutsideLocation(player.getName());
-            if (lastLoc != null) {
-                player.teleport(lastLoc);
-            } else {
-                player.teleport(res.getOutsideFreeLoc(player.getLocation()));
-            }
+            Location lastLoc = event.getFrom();
+            lastLoc.setX(lastLoc.getBlockX() + 0.5);
+            lastLoc.setY(lastLoc.getBlockY());
+            lastLoc.setZ(lastLoc.getBlockZ() + 0.5);
+            event.setTo(lastLoc);
+            StateAssurance.handleNewLocation(player, event.getFrom(), lastLoc);
             player.sendMessage(LocaleLoader.getString("Flags.Messages.MoveDeny"));
             return;
         }

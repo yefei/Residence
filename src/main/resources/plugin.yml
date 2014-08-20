@@ -46,7 +46,7 @@ permissions:
       residence.commands.server: true
   residence.commands.user:
     description: Allows regular commands
-    default: op
+    default: true
     children:
       residence.commands.create: true
       residence.commands.select: true

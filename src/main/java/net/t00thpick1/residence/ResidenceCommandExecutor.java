@@ -404,8 +404,7 @@ public class ResidenceCommandExecutor implements CommandExecutor {
                 if (index < flags.length) {
                     Flag flag = flags[index];
                     String description = flag.getDescription();
-                    player.sendMessage(LocaleLoader.getString("Commands.Flags.Flag", flag.getName()));
-                    player.sendMessage(LocaleLoader.getString("Commands.Flags.FlagType", flag.getType()));
+                    player.sendMessage(LocaleLoader.getString("Commands.Flags.Flag", flag.getName(), flag.getType()));
                     if (description != null) {
                         player.sendMessage(LocaleLoader.getString("Commands.Flags.Description", description));
                     }
@@ -492,6 +491,7 @@ public class ResidenceCommandExecutor implements CommandExecutor {
                 return true;
             }
             res.setTeleportLocation(player.getLocation());
+            player.sendMessage(LocaleLoader.getString("Commands.TPSet.Success"));
             return true;
         }
         if (cmd.equalsIgnoreCase("tp")) {
@@ -756,10 +756,10 @@ public class ResidenceCommandExecutor implements CommandExecutor {
                 player.sendMessage(LocaleLoader.getString("Commands.Create.TooHigh", group.getMaxY()));
                 return true;
             }
-        }
-        if (!resadmin && group.getMaxResidences() <= rmanager.getOwnedZoneCount(player.getName())) {
-            player.sendMessage(LocaleLoader.getString("Commands.Create.TooManyResidences", group.getMaxResidences()));
-            return true;
+            if (group.getMaxResidences() <= rmanager.getOwnedZoneCount(player.getName())) {
+                player.sendMessage(LocaleLoader.getString("Commands.Create.TooManyResidences", group.getMaxResidences()));
+                return true;
+            }
         }
         if (!Utilities.validName(args[1])) {
             player.sendMessage(LocaleLoader.getString("Commands.Create.InvalidName", args[1]));
@@ -770,7 +770,7 @@ public class ResidenceCommandExecutor implements CommandExecutor {
             player.sendMessage(LocaleLoader.getString("Commands.Create.Collide", collide.getName()));
             return true;
         }
-        if (ConfigManager.getInstance().isEconomy()) {
+        if (ConfigManager.getInstance().isEconomy() && !resadmin) {
             double cost = group.getCostEquation().calculate(newArea.getVariables());
             if (cost != 0) {
                 if (!Residence.getInstance().getEconomy().has(player.getName(), cost)) {

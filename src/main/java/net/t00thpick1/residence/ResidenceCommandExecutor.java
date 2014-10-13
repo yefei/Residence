@@ -961,7 +961,6 @@ public class ResidenceCommandExecutor implements CommandExecutor {
             return true;
         }
         if (!resadmin
-                && !player.hasPermission("residence.flags.all")
                 && !player.hasPermission("residence.flags." + flag.getName())) {
             player.sendMessage(LocaleLoader.getString("Commands.Generic.NoPermission"));
             return true;
@@ -1045,7 +1044,6 @@ public class ResidenceCommandExecutor implements CommandExecutor {
                 return true;
             }
             if (!resadmin
-                    && !player.hasPermission("residence.flags.all")
                     && !player.hasPermission("residence.flags." + flag.getName())) {
                 player.sendMessage(LocaleLoader.getString("Commands.Generic.NoPermission"));
                 return true;
@@ -1101,7 +1099,6 @@ public class ResidenceCommandExecutor implements CommandExecutor {
             return true;
         }
         if (!resadmin
-                && !player.hasPermission("residence.flags.all")
                 && !player.hasPermission("residence.flags." + flag.getName())) {
             player.sendMessage(LocaleLoader.getString("Commands.Generic.NoPermission"));
             return true;

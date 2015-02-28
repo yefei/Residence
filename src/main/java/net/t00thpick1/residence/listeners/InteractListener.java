@@ -119,7 +119,7 @@ public class InteractListener implements Listener {
     }
 
     private void info(Player player, Block block, PlayerInteractEvent event) {
-        if (!player.hasPermission("residence.info")) {
+        if (!player.hasPermission("residence.commands.info")) {
             return;
         }
         if (event.getAction() != Action.LEFT_CLICK_BLOCK) {
@@ -138,7 +138,7 @@ public class InteractListener implements Listener {
         if (Residence.getInstance().getCompatabilityManager().isUsingExternalSelectionTool()) {
             return;
         }
-        if (!Utilities.isAdminMode(player) && !player.hasPermission("residence.select")) {
+        if (!Utilities.isAdminMode(player) && !player.hasPermission("residence.commands.select")) {
             return;
         }
         if (event.getAction() == Action.LEFT_CLICK_BLOCK) {
